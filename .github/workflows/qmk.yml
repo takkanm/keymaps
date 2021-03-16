@@ -1,0 +1,29 @@
+name: QMK
+
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone qmk/qmk_firmware
+        uses: actions/checkout@v2
+        with:
+          repository: 'qmk/qmk_firmware'
+          submodules: true
+      - name: Clone this repository
+        uses: actions/checkout@v2
+        with:
+          path: './keyboards/satt/vision/keymaps'
+
+      - name: Install dependencies
+        run: ./util/qmk_install.sh
+
+      - name: Compile
+        run: ./bin/qmk compile -kb satt/vision -km vision
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: vision.hex
+          path: ./.build/satt_vision_vision.hex
