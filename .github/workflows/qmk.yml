@@ -15,7 +15,12 @@ jobs:
       - name: Clone this repository
         uses: actions/checkout@v2
         with:
-          path: './keyboards/satt/vision/keymaps'
+          path: './my_keymaps'
+
+      - name: create dir
+        run: mkdir -p ./keyboards/satt/vision/keymaps/vision
+      - name: copy keymap
+        run: cp ./my_keymaps/vision/* ./keyboards/satt/vision/keymaps/vision
 
       - name: Install dependencies
         run: ./util/qmk_install.sh
