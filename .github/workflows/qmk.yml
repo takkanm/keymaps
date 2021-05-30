@@ -24,12 +24,15 @@ jobs:
 
       - name: Install dependencies
         run: ./util/qmk_install.sh
+        
+      - name: Install qmk by pip
+        run: python3 -m pip install qmk
 
       - name: Compile
-        run: ./bin/qmk compile -kb satt/vision -km vision
+        run: qmk compile -kb satt/vision -km vision
       
       - name: Compile the mark
-        run: ./bin/qmk compile -kb boardsource/the_mark -km via
+        run: qmk compile -kb boardsource/the_mark -km via
 
       - uses: actions/upload-artifact@v2
         with:
