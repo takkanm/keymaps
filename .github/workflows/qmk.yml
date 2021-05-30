@@ -27,6 +27,9 @@ jobs:
 
       - name: Compile
         run: ./bin/qmk compile -kb satt/vision -km vision
+      
+      - name: Compile the mark
+        run: ./bin/qmk compile -kb boardsource/the_mark -km via
 
       - uses: actions/upload-artifact@v2
         with:
