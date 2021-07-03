@@ -21,6 +21,10 @@ jobs:
         run: mkdir -p ./keyboards/satt/vision/keymaps/vision
       - name: copy keymap
         run: cp ./my_keymaps/vision/* ./keyboards/satt/vision/keymaps/vision
+      - name: create dir
+        run: mkdir -p ./keyboards/silverbullet44/keymaps/takkanm
+      - name: copy keymap
+        run: cp ./my_keymaps/silverbullet44/* ./keyboards/silverbullet44/keymaps/takkanm
 
       - name: Install dependencies
         run: ./util/qmk_install.sh
@@ -33,6 +37,9 @@ jobs:
       
       - name: Compile the mark
         run: qmk compile -kb boardsource/the_mark -km via
+
+      - name: Compile the silverbullet44
+        run: qmk compile -kb silverbullet44 -km takkanm
 
       - uses: actions/upload-artifact@v2
         with:
