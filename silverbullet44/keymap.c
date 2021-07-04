@@ -22,13 +22,15 @@
 //};
 enum layer {
     _QWERTY,
-    _CURSOL,
-    _CALC,
-    _ADJUST,
+    _NUM,
+    _SYM,
+	_ADJUST,
 };
 
 enum custom_keycodes {
   RGBRST = SAFE_RANGE,
+  NUM,
+  SYM,
   KC_00,
   ALTAB
 };
@@ -38,6 +40,9 @@ enum custom_keycodes {
 #define SFT_SPC  LSFT_T(KC_SPC)
 #define CTRL_ENT LCTL_T(KC_ENT)
 #define GUI_F12  GUI_T(KC_F12)
+#define CTLESC   LCTL_T(KC_ESC)
+#define GUI_L2 LGUI_T(KC_LANG2)
+#define ALT_L1 RALT_T(KC_LANG1)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -53,11 +58,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                          |  F5  |      |/ Space /  Esc  /       \  Tab  \ Enter\     |  F12  |
  *                          `-----------------------------'         '---------------------------'
  */
+/** original
   [_QWERTY] = LAYOUT(
     KC_TAB,    KC_Q, KC_W, KC_E, KC_R, KC_T,                KC_Y, KC_U, KC_I,    KC_O,   KC_P,    KC_EQL,
     KC_LSFT,   KC_A, KC_S, KC_D, KC_F, KC_G,                KC_H, KC_J, KC_K,    KC_L,   KC_SCLN, KC_QUOT,
     KC_LCTRL,  KC_Z, KC_X, KC_C, KC_V, KC_B,                KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
                    ALT_F5, KC_BSPC, SFT_SPC, CALC,    CUSL, CTRL_ENT, KC_DEL, GUI_F12
+  ),
+  */
+
+  [_QWERTY] = LAYOUT(
+    KC_TAB,   KC_Q, KC_W, KC_E,    KC_R, KC_T,      KC_Y,   KC_U, KC_I,    KC_O,   KC_P,    KC_BSPC,
+    CTLESC,   KC_A, KC_S, KC_D,    KC_F, KC_G,      KC_H,   KC_J, KC_K,    KC_L,   KC_SCLN, KC_QUOT,
+    KC_LSFT,  KC_Z, KC_X, KC_C,    KC_V, KC_B,      KC_N,   KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+                  GUI_L2,  NUM,  KC_SPC, KC_SPC,   KC_ENT,    KC_ENT, SYM,  ALT_L1
   ),
 
 /* Cursol
@@ -72,11 +86,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                          |      |      |/       /       /       \       \      \ |      |      |
  *                          `-----------------------------'         '-----------------------------'
  */
+/** original
   [_CURSOL] = LAYOUT(
     _______, KC_F1,   KC_F2,      KC_PGUP, KC_F4,      KC_F5,                              KC_F6,   KC_F7,        KC_UP,   KC_F9,        KC_F10,  RESET,
     _______, KC_TILD, KC_HOME,    KC_PGDN, KC_END,     KC_LPRN,                            KC_RPRN, KC_LEFT,      KC_DOWN, KC_RGHT,      KC_PIPE, KC_F11,
     _______, KC_GRV,  C(KC_LEFT), KC_F3,   C(KC_RGHT), S(ALTAB),                           ALTAB,   LCA(KC_LEFT), KC_F8,   LCA(KC_RGHT), KC_BSLS, RGBRST,
                                   _______,    _______, C(KC_SPC), MO(_ADJUST),    _______, _______, _______, _______
+  ),
+  */
+  [_NUM] = LAYOUT(
+    RESET,   KC_1,   KC_2,  KC_3,  KC_4,  KC_5,                             KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+    _______, KC_F1,  KC_F2, KC_F3, KC_F4, KC_F5,                            KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+    _______, KC_F6,  KC_F7, KC_F8, KC_F9, KC_F10,                           KC_PGDN, KC_PGUP, _______, _______, _______, _______,
+              _______,    _______, C(KC_SPC), MO(_ADJUST),    _______, _______, _______, _______
   ),
 
 /* Calculater
@@ -91,11 +113,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                          |      |      |/       /       /       \       \   0   \ |  00  |  .   |
  *                          `-----------------------------'         '------------------------------'
  */
+/** original
   [_CALC] = LAYOUT(
     RESET,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                             KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
     _______, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_LBRC,                          KC_RBRC, KC_4,    KC_5,    KC_6,    KC_PPLS, _______,
     _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_EXLM, KC_LCBR,                          KC_RCBR, KC_1,    KC_2,    KC_3,    KC_PEQL, _______,
                                _______, _______, _______, _______,    MO(_ADJUST), KC_0,    KC_00,   KC_PDOT
+  ),
+  */
+  [_SYM] = LAYOUT(
+    RESET,   KC_EXLM, KC_AT,   KC_HASH, KC_DLR, KC_PERC,                          KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                         KC_MINS, KC_EQL,  KC_LCBR, KC_RCBR, KC_PIPE, KC_GRV,
+    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                         KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_BSLS, KC_TILD,
+                               _______, _______, _______, _______,    MO(_ADJUST), _______,    _______,   _______
   ),
 
 /*   ADJUST
@@ -112,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
 
   [_ADJUST] = LAYOUT(
-    _______, XXXXXXX, XXXXXXX, CK_RST,  XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, _______,
+    RESET,   XXXXXXX, XXXXXXX, CK_RST,  XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, _______,
     XXXXXXX, XXXXXXX, MU_TOG,  CK_UP,   AU_TOG,  XXXXXXX,                      RGB_SPI, RGB_MOD,  RGB_VAI, RGB_SAI, RGB_HUI, XXXXXXX,
     XXXXXXX, XXXXXXX, MU_MOD,  CK_DOWN, XXXXXXX, XXXXXXX,                      RGB_SPD, RGB_RMOD, RGB_VAD, RGB_SAD, RGB_HUD, XXXXXXX,
                                XXXXXXX, XXXXXXX, XXXXXXX, _______,    _______, XXXXXXX, XXXXXXX, XXXXXXX
@@ -139,26 +169,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 #endif
 #ifndef VIA_ENABLE
-        case KC_SCLN:
-            if (keyboard_report->mods & MOD_BIT(KC_LSFT)) {
-                if (record->event.pressed) {
-                    unregister_code(KC_LSFT);
-                    tap_code16(keycode);
-                    register_code(KC_LSFT);
-                }
-                /*  } else if (keyboard_report->mods & MOD_BIT(KC_RSFT)) {
-                    if (record->event.pressed) {
-                      unregister_code(KC_RSFT);
-                      tap_code16(keycode);
-                      register_code(KC_RSFT);
-                    } */
+
+        case NUM:
+            if (record->event.pressed) {
+                    layer_on(_NUM);
+                    update_tri_layer(_NUM, _SYM, _ADJUST);
             } else {
-                if (record->event.pressed) {
-                    tap_code16(S(keycode));
-                }
+                    layer_off(_NUM);
+                    update_tri_layer(_NUM, _SYM, _ADJUST);
             }
             return false;
             break;
+
+        case SYM:
+            if (record->event.pressed) {
+                    layer_on(_SYM);
+                    update_tri_layer(_NUM, _SYM, _ADJUST);
+            } else {
+                    layer_off(_SYM);
+                    update_tri_layer(_NUM, _SYM, _ADJUST);
+            }
+            return false;
+            break;
+
         case KC_00:
             if (record->event.pressed) {
                 tap_code(KC_0);
